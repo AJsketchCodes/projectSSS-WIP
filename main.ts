@@ -8,46 +8,6 @@ namespace SpriteKind {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.player2.moveSprite(camera_cam)
 })
-scene.onOverlapTile(SpriteKind.clickable_image, assets.tile`myTile0`, function (sprite2, location) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Triangle, 300, 200, 300, 0, 75, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
-    if (game_startup_check == 3) {
-        if (game_startup_check == 3) {
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Strawberry`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Mint`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Cotten Candy`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Vanilla`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Strawberry`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Grape`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Orange`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Blueberry`)
-            }
-            if (Math.percentChance(65)) {
-                Button_Play.setImage(assets.image`Cherry`)
-            }
-        }
-        info.changeScoreBy(-1)
-        tiles.placeOnRandomTile(Button_Play, assets.tile`myTile2`)
-    }
-    if (game_startup_check == 4.5) {
-        tiles.placeOnRandomTile(Button_Play, assets.tile`myTile2`)
-        Button_Play.setVelocity(0, randint(40, 70))
-    }
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (game_startup_check == 1) {
         music.baDing.play()
@@ -192,24 +152,77 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.clickable_image, function (sprit
         tiles.placeOnRandomTile(Button_Play, assets.tile`myTile2`)
         info.changeScoreBy(1)
     }
-    if (Sallie_walker.overlapsWith(Button_Play) && game_startup_check == 4.5) {
-    	
-    }
 })
+function Cutscenes () {
+    if (game_startup_check == 1.1) {
+        controller.moveSprite(Sallie_walker, 50, 0)
+        player_image.follow(Sallie_walker, 150)
+        player_image.setFlag(SpriteFlag.GhostThroughSprites, false)
+        Sallie_walker.setFlag(SpriteFlag.Invisible, false)
+        camera_cam.setPosition(152, 100)
+        Sallie_walker.setPosition(142, 106)
+        player_image.setPosition(145, 106)
+        player_image.setImage(assets.image`Cone_Hitbox`)
+        characterAnimations.loopFrames(
+        Sallie_walker,
+        assets.animation`Idle`,
+        250,
+        characterAnimations.rule(Predicate.NotMoving)
+        )
+        scroller.scrollBackgroundWithSpeed(20, 20, scroller.BackgroundLayer.Layer1)
+        scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`Menu`)
+        characterAnimations.loopFrames(
+        Sallie_walker,
+        assets.animation`Right`,
+        150,
+        characterAnimations.rule(Predicate.MovingRight)
+        )
+        characterAnimations.loopFrames(
+        Sallie_walker,
+        assets.animation`Left`,
+        150,
+        characterAnimations.rule(Predicate.MovingLeft)
+        )
+        scene.cameraFollowSprite(camera_cam)
+        tiles.setCurrentTilemap(tilemap`level5`)
+        scene.setBackgroundImage(assets.image`White`)
+    }
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`Blue`)
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`Mountains`)
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`Hills`)
+    scroller.setLayerImage(scroller.BackgroundLayer.Layer3, assets.image`Trees`)
+    scroller.setCameraScrollingMultipliers(0.1, 0.3, scroller.BackgroundLayer.Layer1)
+    scroller.setCameraScrollingMultipliers(0.2, 0.2, scroller.BackgroundLayer.Layer2)
+    scroller.setCameraScrollingMultipliers(0.3, 0.1, scroller.BackgroundLayer.Layer3)
+    Sallie_walker.setPosition(150, 114)
+    Sallie_walker.setFlag(SpriteFlag.Invisible, false)
+    tiles.setCurrentTilemap(tilemap`level11`)
+    story.startCutscene(function () {
+        characterAnimations.loopFrames(
+        Sallie_walker,
+        assets.animation`Sallie_moving-Right`,
+        150,
+        characterAnimations.rule(Predicate.MovingRight)
+        )
+    })
+}
 function Music () {
     if (game_startup_check == 1) {
         console.log("PlayMusic:1")
         while (game_startup_check == 1) {
             if (game_startup_check == 1) {
-                music.playMelody("G A C A F - F - ", 450)
+                music.playSoundEffect(music.createSoundEffect(WaveShape.Triangle, 332, 332, 171, 0, 2000, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
+                music.playMelody("G A C A F - F - ", 400)
                 music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
-                music.playMelody("D G E A - G D - ", 450)
+                music.playSoundEffect(music.createSoundEffect(WaveShape.Triangle, 432, 432, 171, 0, 2000, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
+                music.playMelody("D G E A - G D - ", 400)
                 music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
+                music.playSoundEffect(music.createSoundEffect(WaveShape.Triangle, 400, 400, 171, 0, 2000, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
             }
             if (game_startup_check == 1) {
-                music.playMelody("G B D G - E C - ", 450)
+                music.playMelody("G B D G - E C - ", 400)
                 music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
-                music.playMelody("D B G - A F E - ", 450)
+                music.playMelody("D B G - A F E - ", 400)
                 music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
             }
         }
@@ -244,23 +257,14 @@ function Music () {
         }
     }
 }
-function Error () {
-    scene.setBackgroundImage(assets.image`Menu`)
-}
 function Loadanim () {
     console.log("Call:Load-Anim")
-    music.setVolume(1)
     color.startFade(color.originalPalette, color.Black, 500)
-    pause(500)
+    pause(450)
+    music.setVolume(100)
     player_image.setImage(assets.image`Sallie`)
-    animation.runImageAnimation(
-    player_image,
-    assets.animation`Sallie_moving-Right`,
-    150,
-    true
-    )
     controller.moveSprite(Sallie_walker, 0, 0)
-    music.setTempo(1000)
+    music.setTempo(500000)
     Button_Play.setPosition(150, 0)
     Button_Help.setPosition(150, 0)
     player_image.setPosition(215, 142)
@@ -308,13 +312,16 @@ function Loadanim () {
         true
         )
     }
+    if (game_startup_check == 1) {
+        game_startup_check = 2
+    }
     pause(2000)
     color.startFade(color.originalPalette, color.Black, 500)
     music.setTempo(120)
     pause(500)
-    music.setVolume(300)
+    music.setVolume(255)
     animation.stopAnimation(animation.AnimationTypes.All, player_image)
-    if (game_startup_check == 1) {
+    if (game_startup_check == 2) {
         color.startFade(color.Black, color.originalPalette, 500)
         game_startup_check = 2
         music.setVolume(255)
@@ -329,7 +336,6 @@ function Loadanim () {
         controller.moveSprite(player_image, 150, 150)
         scroller.scrollBackgroundWithSpeed(20, -15, scroller.BackgroundLayer.Layer1)
         scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`Menu`)
-        scene.setBackgroundColor(12)
         animation.runImageAnimation(
         Button_Play,
         assets.animation`Play-anim`,
@@ -357,9 +363,6 @@ function Loadanim () {
     if (game_startup_check == 3) {
         PLAY()
     }
-}
-function WinLose () {
-	
 }
 function PLAY () {
     game_startup_check = 3
@@ -420,27 +423,11 @@ function PLAY () {
     tiles.placeOnRandomTile(Button_Play, assets.tile`myTile2`)
     Button_Play.setVelocity(0, 80)
 }
-function Credits () {
-    scroller.setLayerImage(scroller.BackgroundLayer.Layer0, assets.image`Blue`)
-    scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`Mountains`)
-    scroller.setLayerImage(scroller.BackgroundLayer.Layer2, assets.image`Hills`)
-    scroller.setLayerImage(scroller.BackgroundLayer.Layer3, assets.image`Trees`)
-    scroller.setCameraScrollingMultipliers(0.1, 0.3, scroller.BackgroundLayer.Layer1)
-    scroller.setCameraScrollingMultipliers(0.2, 0.2, scroller.BackgroundLayer.Layer2)
-    scroller.setCameraScrollingMultipliers(0.3, 0.1, scroller.BackgroundLayer.Layer3)
-    Sallie_walker.setPosition(150, 114)
-    Sallie_walker.setFlag(SpriteFlag.Invisible, false)
-    tiles.setCurrentTilemap(tilemap`level11`)
-    story.startCutscene(function () {
-        characterAnimations.loopFrames(
-        Sallie_walker,
-        assets.animation`Sallie_moving-Right`,
-        150,
-        characterAnimations.rule(Predicate.MovingRight)
-        )
-    })
-}
-scene.onOverlapTile(SpriteKind.clickable_image, assets.tile`myTile4`, function (sprite2, location) {
+controller.combos.attachCombo("badown", function () {
+    info.setLife(50)
+})
+scene.onOverlapTile(SpriteKind.clickable_image, assets.tile`myTile0`, function (sprite2, location) {
+    music.smallCrash.play()
     if (game_startup_check == 3) {
         if (game_startup_check == 3) {
             if (Math.percentChance(65)) {
@@ -470,6 +457,8 @@ scene.onOverlapTile(SpriteKind.clickable_image, assets.tile`myTile4`, function (
             if (Math.percentChance(65)) {
                 Button_Play.setImage(assets.image`Cherry`)
             }
+            info.changeLifeBy(-0.01)
+            info.changeScoreBy(-0.01)
         }
         tiles.placeOnRandomTile(Button_Play, assets.tile`myTile2`)
     }
@@ -529,16 +518,15 @@ false
 )
 pause(150)
 logo_image.setFlag(SpriteFlag.Invisible, true)
+pause(200)
 animation.runImageAnimation(
 logo_image,
 assets.animation`Logo_PGW_idle`,
 100,
 true
 )
-pause(200)
 logo_image.setFlag(SpriteFlag.Invisible, false)
 color.startFade(color.Black, color.originalPalette)
-scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal)
 scroller.setLayerImage(scroller.BackgroundLayer.Layer1, assets.image`Clouds`)
 scene.setBackgroundImage(assets.image`Backround-Blue`)
 tiles.setCurrentTilemap(tilemap`level2`)
@@ -556,4 +544,5 @@ camera_cam.setPosition(150, 100)
 logo_image.setPosition(152, 104)
 pause(550)
 game_startup_check = 1
+pause(100)
 Music()
